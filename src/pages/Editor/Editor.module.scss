@@ -1,0 +1,38 @@
+.container {
+  padding: 20px;
+  height: 100vh;
+  overflow: auto;
+  display: flex;
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  margin-left: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.operate {
+  padding-top: 20px;
+  & > * {
+    margin-right: 20px;
+  }
+}
+
+.result {
+  flex: 1;
+  overflow: hidden;
+}
+
+.resultList {
+  height: 100%;
+  padding: 20px;
+  overflow: auto;
+}
+
+.bottom {
+}
