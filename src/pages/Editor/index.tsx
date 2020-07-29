@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
 import XLSX from 'xlsx';
-import {SheetType} from "../../types";
+import {LangType, SheetType} from "../../types";
 import getExcelSheetArray from "./getExcelSheetArray";
-import {Button, Upload, message, List, Divider} from 'antd';
+import {Button, Divider, List, message, Space, Upload} from 'antd';
 import {DownloadOutlined, InboxOutlined} from '@ant-design/icons';
 import {RcFile} from "antd/es/upload";
 import styles from './Editor.module.scss';
-import JSZip from 'jszip';
-import {saveAs} from 'file-saver';
+import {downloadZip, FileType} from "./downloadZip";
+import sheetList2LangList from "./sheetList2LangList";
 
 const {Dragger} = Upload;
 
 const Editor: React.FC = () => {
   const [sheetList, setSheetList] = useState<SheetType[]>([]);
+  const [langList, setLangList] = useState<LangType[]>([]);
 
   const dropProps = {
     name: 'file',
@@ -42,6 +43,8 @@ const Editor: React.FC = () => {
       const workbook = XLSX.read(data, {type: 'array'});
       const sheets = getExcelSheetArray(workbook);
       setSheetList(sheets);
+      console.log(sheetList2LangList(sheets));
+      setLangList(sheetList2LangList(sheets));
       message.success('转换成功');
     };
     reader.onerror = (e) => {
@@ -49,19 +52,6 @@ const Editor: React.FC = () => {
       throw new Error('FileReader Error');
     };
     reader.readAsArrayBuffer(file);
-  };
-
-  const downloadZip = () => {
-    const zip = new JSZip();
-    sheetList.forEach((sheet) => {
-      zip.folder(sheet.name);
-      sheet.jsonObjects.forEach((jsonObject) => {
-        zip.file(`/${sheet.name}/${jsonObject.lang}.json`, JSON.stringify(jsonObject.obj));
-      });
-    });
-    zip.generateAsync({type: 'blob'}).then((res) => {
-      saveAs(res, '翻译导出.zip');
-    });
   };
 
   return (
@@ -106,25 +96,45 @@ const Editor: React.FC = () => {
           />
         </div>
         <div className={styles.operate}>
-          <a href="/template.xlsx">
+          <Space>
+            <a href="/template.xlsx">
+              <Button
+                type="primary"
+                shape="round"
+                icon={<DownloadOutlined/>}
+                size="large"
+              >
+                下载模版
+              </Button>
+            </a>
             <Button
               type="primary"
-              shape="round"
-              icon={<DownloadOutlined/>}
               size="large"
+              shape="round"
+              disabled={langList.length === 0}
+              onClick={() => downloadZip(langList, FileType.json)}
             >
-              下载模版
+              下载前端语言包
             </Button>
-          </a>
-          <Button
-            type="primary"
-            size="large"
-            shape="round"
-            disabled={sheetList.length === 0}
-            onClick={downloadZip}
-          >
-            全部下载
-          </Button>
+            <Button
+              type="primary"
+              size="large"
+              shape="round"
+              disabled={langList.length === 0}
+              onClick={() => downloadZip(langList, FileType.ios)}
+            >
+              下载 IOS 语言包
+            </Button>
+            <Button
+              type="primary"
+              size="large"
+              shape="round"
+              disabled={langList.length === 0}
+              onClick={() => downloadZip(langList, FileType.android)}
+            >
+              下载安卓语言包
+            </Button>
+          </Space>
         </div>
       </div>
     </div>

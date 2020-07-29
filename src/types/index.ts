@@ -13,3 +13,30 @@ export type JsonObjectType = {
 export type KeyValueObject = {
   [key: string]: string;
 }
+
+/**
+ * {
+ *   name: 'en',
+ *   modules: [
+ *     {
+ *       name: 'module1',
+ *       jsonObject: {
+ *         lang: 'en',
+ *         obj: {
+ *           'hello': 'hello'
+ *         },
+ *         dataUrl: ''
+ *       }
+ *     }
+ *   ]
+ * }
+ */
+export type LangType = {
+  name: string;
+  modules: ModuleType[];
+}
+
+export type ModuleType = {
+  name: string;
+  jsonObject: JsonObjectType;
+}

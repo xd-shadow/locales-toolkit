@@ -2,6 +2,10 @@ import XLSX from 'xlsx';
 import {JsonObjectType, KeyValueObject, SheetType} from "../../types";
 import {formatJson2DataUrl} from "../../utils/format";
 
+/**
+ * 获取以模块分类的数组
+ * @param workbook
+ */
 const getExcelSheetArray: (workbook: XLSX.WorkBook) => SheetType[] = (workbook) => {
   if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
     return [];
@@ -16,6 +20,11 @@ const getExcelSheetArray: (workbook: XLSX.WorkBook) => SheetType[] = (workbook) 
   })
 };
 
+/**
+ * 获取某模块的语言数组
+ * @param rows
+ * @param titles
+ */
 const getJsonObjects: (rows: any[], titles: string[]) => JsonObjectType[] = (rows, titles) => {
   const langList = titles.slice(2);
   const result: JsonObjectType[] = [];
@@ -30,7 +39,11 @@ const getJsonObjects: (rows: any[], titles: string[]) => JsonObjectType[] = (row
   return result;
 };
 
-// 获取某个语言的json
+/**
+ * 获取某个语言json
+ * @param rows
+ * @param langColIndex
+ */
 const getLangObject: (rows: string[][], langColIndex: number) => KeyValueObject = (rows, langColIndex) => {
   const obj: KeyValueObject = {};
   rows.forEach((row) => {
