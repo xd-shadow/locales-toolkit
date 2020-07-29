@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import XLSX from 'xlsx';
 import {LangType, SheetType} from "../../types";
 import getExcelSheetArray from "./getExcelSheetArray";
-import {Button, Divider, List, message, Space, Upload} from 'antd';
+import {Button, Divider, List, message, Space, Upload, Steps} from 'antd';
 import {DownloadOutlined, InboxOutlined} from '@ant-design/icons';
 import {RcFile} from "antd/es/upload";
 import styles from './Editor.module.scss';
@@ -10,6 +10,7 @@ import {downloadZip, FileType} from "./downloadZip";
 import sheetList2LangList from "./sheetList2LangList";
 
 const {Dragger} = Upload;
+const {Step} = Steps;
 
 const Editor: React.FC = () => {
   const [sheetList, setSheetList] = useState<SheetType[]>([]);
@@ -62,7 +63,16 @@ const Editor: React.FC = () => {
             <InboxOutlined/>
           </p>
           <p className="ant-upload-text">点击选择或将 Excel 拖拽到此处</p>
-          <p className="ant-upload-hint">使用符合模版格式的 .xlsx 文件，第一列为字段名，第二列为备注，第三列起为翻译文案</p>
+          <p className="ant-upload-hint">需使用符合模版格式的 .xlsx 文件</p>
+          <div className={styles.tip}>
+            <p>新的文案工作流程如下：</p>
+            <Steps current={5} direction="vertical" progressDot>
+              <Step description="开发制定好excel 规范，放到工具（web）上供下载"/>
+              <Step description="产品下载excel规范文件，填写文案的key和中文文案"/>
+              <Step description="产品将excel文件发给市场，翻译，完善其它所需语言的文案"/>
+              <Step description="产品将最终的excel文件发给开发。开发上传excel到工具（web），导出所需的文案格式文件（json、txt…）" />
+            </Steps>
+          </div>
         </Dragger>
       </div>
       <div className={styles.right}>

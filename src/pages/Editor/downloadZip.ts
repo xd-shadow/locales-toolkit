@@ -80,7 +80,7 @@ export const getIosOutput: (obj: KeyValueObject) => string = (obj) => {
 export const getAndroidOutput: (obj: KeyValueObject) => string = (obj) => {
   let result = '<resources>\n';
   Object.keys(obj).forEach((key) => {
-    result += `  <string name="${key}">${obj[key]}</string>\n`
+    result += `  <string name="${key}">${obj[key]}</string>\n`;
   });
   result += '</resources>'
   return result;
