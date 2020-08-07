@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Infos
+```bash
+FE Dev: 苑泽宇
+Beta url: 3.0.169.187:8080
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

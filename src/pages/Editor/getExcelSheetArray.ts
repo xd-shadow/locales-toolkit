@@ -27,9 +27,10 @@ const getExcelSheetArray: (workbook: XLSX.WorkBook) => SheetType[] = (workbook) 
  */
 const getJsonObjects: (rows: any[], titles: string[]) => JsonObjectType[] = (rows, titles) => {
   const langList = titles.slice(2);
+  const availableRow = rows.filter((item) => item && item[0] && item[0].length > 0);
   const result: JsonObjectType[] = [];
   langList.forEach((lang, index) => {
-    const obj = getLangObject(rows, index + 2);
+    const obj = getLangObject(availableRow, index + 2);
     result.push({
       lang,
       obj,
