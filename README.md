@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Infos
 ```bash
 FE Dev: 苑泽宇
-Beta url: 3.0.169.187:8080
+Beta url: http://101.32.104.194:8091/
 ```
 
 ## Available Scripts
